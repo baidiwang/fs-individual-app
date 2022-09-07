@@ -1,16 +1,11 @@
+const Pokemon = require('../db/models/Pokemons')
+const {Sequelize} = require('sequelize')
 const router = require("express").Router();
-const axios = require("axios");
 
 router.get("/", async (req, res, next) => {
-	const randomPokemonImages = [];
-	for (let i = 0; i < 6; i++) {
-		const id = Math.floor(Math.random() * 500) + 1;
-		const pokemonDetailResp = await axios.get('https://pokeapi.co/api/v2/pokemon/' + id);
-		const imageUrl = pokemonDetailResp.data.sprites.front_default;
-		randomPokemonImages.push(imageUrl);
-	}
+	const pokemons = await Pokemon.findAll({ order: Sequelize.fn('random'), limit: 6 });
 
-	res.json(randomPokemonImages);
+	res.json(pokemons);
 });
 
 module.exports = router;

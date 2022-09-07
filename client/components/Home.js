@@ -1,23 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import blueCandy from '../images/blue-candy.png'
-import greenCandy from '../images/green-candy.png'
-import orangeCandy from '../images/orange-candy.png'
-import purpleCandy from '../images/purple-candy.png'
-import redCandy from '../images/red-candy.png'
-import yellowCandy from '../images/yellow-candy.png'
 import blank from '../images/blank.png'
 import axios from 'axios'
 
 const width = 8
-// const candyColors = [
-//   blueCandy,
-//   orangeCandy,
-//   purpleCandy,
-//   redCandy,
-//   yellowCandy,
-//   greenCandy
-// ]
 
 /**
  * COMPONENT
@@ -29,11 +15,11 @@ export const Home = props => {
   const [squareBeingDragged, setSquareBeingDragged] = useState(null)
   const [squareBeingReplaced, setSquareBeingReplaced] = useState(null)
   const [scoreDisplay, setScoreDisplay] = useState(0)
-  const [candyColors, setCandyColors] = useState([])
+  const [pokemons, setPokemons] = useState([])
 
   useEffect(() => {
     axios.get('/api/pokedex').then(res => {
-      setCandyColors(res.data)
+      setPokemons(res.data)
     })
   }, [])
 
@@ -105,8 +91,8 @@ export const Home = props => {
       const isFirstRow = firstRow.includes(i)
 
       if (isFirstRow && currentColorArrangement[i] === blank) {
-        let randomNumber = Math.floor(Math.random() * candyColors.length)
-        currentColorArrangement[i] = candyColors[randomNumber]
+        let randomNumber = Math.floor(Math.random() * pokemons.length)
+        currentColorArrangement[i] = pokemons[randomNumber]
       }
 
       if ((currentColorArrangement[i + width]) === blank) {
@@ -126,8 +112,8 @@ export const Home = props => {
     const squareBeingDraggedId = parseInt(squareBeingDragged.getAttribute('data-id'))
     const squareBeingReplacedId = parseInt(squareBeingReplaced.getAttribute('data-id'))
 
-    currentColorArrangement[squareBeingReplacedId] = squareBeingDragged.getAttribute('src')
-    currentColorArrangement[squareBeingDraggedId] = squareBeingReplaced.getAttribute('src')
+    currentColorArrangement[squareBeingReplacedId] = JSON.parse(squareBeingDragged.getAttribute('data-pokemon'))
+    currentColorArrangement[squareBeingDraggedId] = JSON.parse(squareBeingReplaced.getAttribute('data-pokemon'))
 
     const validMoves = [
       squareBeingDraggedId - 1,
@@ -149,8 +135,8 @@ export const Home = props => {
       setSquareBeingDragged(null)
       setSquareBeingReplaced(null)
     } else {
-      currentColorArrangement[squareBeingReplacedId] = squareBeingReplaced.getAttribute('src')
-      currentColorArrangement[squareBeingDraggedId] = squareBeingDragged.getAttribute('src')
+      currentColorArrangement[squareBeingReplacedId] = JSON.parse(squareBeingReplaced.getAttribute('data-pokemon'))
+      currentColorArrangement[squareBeingDraggedId] = JSON.parse(squareBeingDragged.getAttribute('data-pokemon'))
       setCurrentColorArrangement([...currentColorArrangement])
     }
   }
@@ -159,19 +145,21 @@ export const Home = props => {
   const createBoard = () => {
     const randomColorArrangement = []
     for (let i = 0; i < width * width; i++) {
-      const randomColor = candyColors[Math.floor(Math.random() * candyColors.length)]
+      const randomColor = pokemons[Math.floor(Math.random() * pokemons.length)]
       randomColorArrangement.push(randomColor)
     }
     setCurrentColorArrangement(randomColorArrangement)
   }
 
   useEffect(() => {
-    createBoard()
+    if (pokemons.length > 0) {
+      createBoard()
+    }
   }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (candyColors.length > 0) {
+      if (pokemons.length > 0) {
         checkForColumnOfFour()
         checkForRowOfFour()
         checkForColumnOfThree()
@@ -183,8 +171,6 @@ export const Home = props => {
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow, currentColorArrangement])
 
-  console.log(currentColorArrangement);
-
   return (
     <div className="app">
       <h3>Welcome, {username}</h3>
@@ -192,9 +178,11 @@ export const Home = props => {
         {currentColorArrangement.map((candyColor, index) => (
           <img
             key={index}
-            src={candyColor}
-            alt={candyColor}
+            src={candyColor ? candyColor.imageUrl: ''}
+            alt={candyColor ? candyColor.imageUrl: ''}
+            className={candyColor ? candyColor.type: ''}
             data-id={index}
+            data-pokeman={JSON.stringify(candyColor)}
             draggable={true}
             onDragStart={dragStart}
             onDragOver={(e) => e.preventDefault()}

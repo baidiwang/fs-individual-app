@@ -1,6 +1,9 @@
 'use strict'
 
 const {db, models: {User} } = require('../server/db')
+const axios = require('axios')
+const {response} = require('express')
+const Pokemon = require('../server/db/models/Pokemons')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -17,6 +20,29 @@ async function seed() {
   ])
 
   console.log(`seeded ${users.length} users`)
+
+  // Get Pokemon data
+  const pokemonRequests = []
+  for (let i = 1; i < 20; i++) {
+    const request = axios.get('https://pokeapi.co/api/v2/pokemon-form/' + i)
+    pokemonRequests.push(request)
+  }
+
+  try{
+    const responses = await axios.all(pokemonRequests)
+    for(let i = 0; i < responses.length; i++) {
+      const data = responses[i].data
+      await Pokemon.create({
+        name: data.pokemon.name,
+        imageUrl: data.sprites.front_default,
+        type: data.types[0].type.name
+      })
+    }
+  } catch (e) {
+    console.log(e)
+  }
+  console.log(`seeded ${pokemonRequests.length} pokemons`)
+
   console.log(`seeded successfully`)
   return {
     users: {

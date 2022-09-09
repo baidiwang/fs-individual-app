@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import blank from '../images/blank.png'
+import pokemonDefault from '../images/pokemon-default.png'
 import axios from 'axios'
 
 const width = 8
@@ -29,7 +30,7 @@ export const Home = props => {
       const decidedColor = currentColorArrangement[i]
       const isBlank = currentColorArrangement[i] === blank
 
-      if (columnOfFour.every(square => currentColorArrangement[square] === decidedColor && !isBlank)) {
+      if (columnOfFour.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
         setScoreDisplay((score) => score + 4)
         columnOfFour.forEach(square => currentColorArrangement[square] = blank)
         return true
@@ -46,7 +47,7 @@ export const Home = props => {
 
       if (notValid.includes(i)) continue
 
-      if (rowOfFour.every(square => currentColorArrangement[square] === decidedColor && !isBlank)) {
+      if (rowOfFour.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
         setScoreDisplay((score) => score + 4)
         rowOfFour.forEach(square => currentColorArrangement[square] = blank)
         return true
@@ -60,7 +61,7 @@ export const Home = props => {
       const decidedColor = currentColorArrangement[i]
       const isBlank = currentColorArrangement[i] === blank
 
-      if (columnOfThree.every(square => currentColorArrangement[square] === decidedColor && !isBlank)) {
+      if (columnOfThree.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
         setScoreDisplay((score) => score + 3)
         columnOfThree.forEach(square => currentColorArrangement[square] = blank)
         return true
@@ -77,7 +78,7 @@ export const Home = props => {
 
       if (notValid.includes(i)) continue
 
-      if (rowOfThree.every(square => currentColorArrangement[square] === decidedColor && !isBlank)) {
+      if (rowOfThree.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
         setScoreDisplay((score) => score + 3)
         rowOfThree.forEach(square => currentColorArrangement[square] = blank)
         return true
@@ -135,8 +136,8 @@ export const Home = props => {
       setSquareBeingDragged(null)
       setSquareBeingReplaced(null)
     } else {
-      currentColorArrangement[squareBeingReplacedId] = JSON.parse(squareBeingReplaced.getAttribute('data-pokemon'))
-      currentColorArrangement[squareBeingDraggedId] = JSON.parse(squareBeingDragged.getAttribute('data-pokemon'))
+      currentColorArrangement[squareBeingReplacedId] = JSON.parse(squareBeingDragged.getAttribute('data-pokemon'))
+      currentColorArrangement[squareBeingDraggedId] = JSON.parse(squareBeingReplaced.getAttribute('data-pokemon'))
       setCurrentColorArrangement([...currentColorArrangement])
     }
   }
@@ -155,7 +156,7 @@ export const Home = props => {
     if (pokemons.length > 0) {
       createBoard()
     }
-  }, [])
+  }, [pokemons])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -171,26 +172,37 @@ export const Home = props => {
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow, currentColorArrangement])
 
+  const imageLoad = (pokemon) => {
+    pokemon.load = true;
+    setCurrentColorArrangement([...currentColorArrangement]);
+  }
+
   return (
     <div className="app">
       <h3>Welcome, {username}</h3>
       <div className="game">
         {currentColorArrangement.map((candyColor, index) => (
-          <img
-            key={index}
-            src={candyColor ? candyColor.imageUrl: ''}
-            alt={candyColor ? candyColor.imageUrl: ''}
-            className={candyColor ? candyColor.type: ''}
-            data-id={index}
-            data-pokeman={JSON.stringify(candyColor)}
-            draggable={true}
-            onDragStart={dragStart}
-            onDragOver={(e) => e.preventDefault()}
-            onDragEnter={(e) => e.preventDefault()}
-            onDragLeave={(e) => e.preventDefault()}
-            onDrop={dragDrop}
-            onDragEnd={dragEnd}
-          />
+          <div className="item">
+            <img
+              key={index}
+              src={candyColor ? candyColor.imageUrl: pokemonDefault}
+              alt={candyColor ? candyColor.imageUrl: ''}
+              className={candyColor ? candyColor.type: ''}
+              data-id={index}
+              data-pokemon={JSON.stringify(candyColor)}
+              draggable={true}
+              onDragStart={dragStart}
+              onLoad={() => imageLoad(candyColor)}
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnter={(e) => e.preventDefault()}
+              onDragLeave={(e) => e.preventDefault()}
+              onDrop={dragDrop}
+              onDragEnd={dragEnd}
+            />
+            {
+              !candyColor.load && <img src={pokemonDefault} key={1000 + index} alt="pokemon-default" className="item-default-img" />
+            }
+          </div>
         ))}
       </div>
       <div className="score-board">

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {authenticate} from '../store'
+import Navbar from './Navbar'
 
 /**
  * COMPONENT
@@ -8,27 +9,33 @@ import {authenticate} from '../store'
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
+  // return (
+  //   <div>
+  //     <form onSubmit={handleSubmit} name={name}>
+  //       <div>
+  //         <label htmlFor="username">
+  //           <small>Username</small>
+  //         </label>
+  //         <input name="username" type="text" />
+  //       </div>
+  //       <div>
+  //         <label htmlFor="password">
+  //           <small>Password</small>
+  //         </label>
+  //         <input name="password" type="password" />
+  //       </div>
+  //       <div>
+  //         <button type="submit">{displayName}</button>
+  //       </div>
+  //       {error && error.response && <div> {error.response.data} </div>}
+  //     </form>
+  //   </div>
+  // )
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
+    <>
+      <Navbar />
+      <div className="content"></div>
+    </>
   )
 }
 

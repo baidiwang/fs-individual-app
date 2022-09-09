@@ -20,8 +20,13 @@ module.exports = {
         }
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file-loader'
+        test: /\.(jpe?g|png|gif|svg|mp3)$/i,
+        loader: 'file-loader',
+        options: {
+          publicPath: '/images',
+          name: '[name].[ext]',
+          outputPath: 'public/images'
+        }
       }
     ]
   }

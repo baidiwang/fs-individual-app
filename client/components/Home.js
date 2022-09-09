@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import blank from '../images/blank.png'
 import pokemonDefault from '../images/pokemon-default.png'
 import axios from 'axios'
+import pokemonBall from '../images/pokemon_ball.png'
+import stopIcon from '../images/stop.png'
+import gameOver from '../images/game_over.png'
+import star from '../images/stars.png'
 
 const width = 8
 
@@ -17,12 +21,43 @@ export const Home = props => {
   const [squareBeingReplaced, setSquareBeingReplaced] = useState(null)
   const [scoreDisplay, setScoreDisplay] = useState(0)
   const [pokemons, setPokemons] = useState([])
+  const [seconds, setSeconds] = useState(30)
 
   useEffect(() => {
     axios.get('/api/pokedex').then(res => {
       setPokemons(res.data)
     })
+    let timingInterval = setInterval(() => {
+      setSeconds(prevState => {
+        if (prevState > 0) {
+          return prevState - 1
+        } else {
+          clearInterval(timingInterval)
+          return 0
+        }
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(timingInterval)
+    }
   }, [])
+
+  const startOver = () => {
+    setSeconds(30);
+    setScoreDisplay(0);
+    createBoard();
+    let timingInterval = setInterval(() => {
+      setSeconds(prevState => {
+        if (prevState > 0) {
+          return prevState - 1
+        } else {
+          clearInterval(timingInterval)
+          return 0
+        }
+      });
+    }, 1000);
+  }
 
   const checkForColumnOfFour = () => {
     for (let i = 0; i <= 39; i++) {
@@ -179,7 +214,22 @@ export const Home = props => {
 
   return (
     <div className="app">
-      <h3>Welcome, {username}</h3>
+      <div className="game-header">
+        <div className="action-wrapper">
+          <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
+          <button onClick={() => console.log(111)} style={{width: 150}}>{scoreDisplay}</button>
+        </div>
+        <div>
+          <img src={stopIcon} alt="stop-icon" className="stop-icon" />
+        </div>
+        <div className="action-wrapper">
+          <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
+          <button onClick={() => console.log(111)} style={{width: 150}}>History Score</button>
+        </div>
+      </div>
+      <div className="timing">
+        <div className="timing-progress" style={{width: (seconds / 30 * 100) + '%'}}></div>
+      </div>
       <div className="game">
         {currentColorArrangement.map((candyColor, index) => (
           <div className="item">
@@ -205,9 +255,24 @@ export const Home = props => {
           </div>
         ))}
       </div>
-      <div className="score-board">
-        <h2>{scoreDisplay}</h2>
-      </div>
+      {
+        seconds === 0 && (
+          <div className="modal-wrapper">
+            <div className="modal-content">
+              {
+                scoreDisplay > 50 ? <img className="star" src={star} /> :
+                  <img className="over" src={gameOver} />
+              }
+              <div>Your score: {scoreDisplay}</div>
+              <div>History score: {scoreDisplay}</div>
+              <div className="action-wrapper">
+                <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
+                <button onClick={() => startOver()}>Star Over</button>
+              </div>
+            </div>
+          </div>
+        )
+      }
     </div>
   )
 }

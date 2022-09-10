@@ -72,7 +72,7 @@ export const Home = props => {
       const isBlank = currentColorArrangement[i] === blank
 
       if (columnOfFour.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
-        setScoreDisplay((score) => score + 4)
+        setScoreDisplay((score) => score + 40)
         columnOfFour.forEach(square => currentColorArrangement[square] = blank)
         return true
       }
@@ -89,7 +89,7 @@ export const Home = props => {
       if (notValid.includes(i)) continue
 
       if (rowOfFour.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
-        setScoreDisplay((score) => score + 4)
+        setScoreDisplay((score) => score + 40)
         rowOfFour.forEach(square => currentColorArrangement[square] = blank)
         return true
       }
@@ -103,7 +103,7 @@ export const Home = props => {
       const isBlank = currentColorArrangement[i] === blank
 
       if (columnOfThree.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
-        setScoreDisplay((score) => score + 3)
+        setScoreDisplay((score) => score + 30)
         columnOfThree.forEach(square => currentColorArrangement[square] = blank)
         return true
       }
@@ -120,7 +120,7 @@ export const Home = props => {
       if (notValid.includes(i)) continue
 
       if (rowOfThree.every(square => currentColorArrangement[square].id === decidedColor.id && !isBlank)) {
-        setScoreDisplay((score) => score + 3)
+        setScoreDisplay((score) => score + 30)
         rowOfThree.forEach(square => currentColorArrangement[square] = blank)
         return true
       }
@@ -266,11 +266,11 @@ export const Home = props => {
           <div className="modal-wrapper">
             <div className="modal-content">
               {
-                scoreDisplay > 50 ? <img className="star" src={star} /> :
+                scoreDisplay > 200 ? <img className="star" src={star} /> :
                   <img className="over" src={gameOver} />
               }
               <div>
-                {scoreDisplay > 50 ? 'YOU WIN!' : 'YOU LOSE!'}
+                {scoreDisplay > 200 ? 'YOU WIN!' : 'YOU LOSE!'}
               </div>
               <div>
                 <div>Your score: {scoreDisplay}</div>

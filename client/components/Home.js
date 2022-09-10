@@ -10,6 +10,8 @@ import star from '../images/stars.png'
 
 const width = 8
 
+let timingInterval
+
 /**
  * COMPONENT
  */
@@ -27,27 +29,31 @@ export const Home = props => {
     axios.get('/api/pokedex').then(res => {
       setPokemons(res.data)
     })
-    let timingInterval = setInterval(() => {
-      setSeconds(prevState => {
-        if (prevState > 0) {
-          return prevState - 1
-        } else {
-          clearInterval(timingInterval)
-          return 0
-        }
-      });
-    }, 1000);
+    startTiming()
 
     return () => {
       clearInterval(timingInterval)
     }
   }, [])
 
+  const stopGame = () => {
+    if (timingInterval) {
+      clearInterval(timingInterval)
+      timingInterval = undefined;
+    } else {
+      startTiming()
+    }
+  }
+
   const startOver = () => {
-    setSeconds(30);
-    setScoreDisplay(0);
-    createBoard();
-    let timingInterval = setInterval(() => {
+    setSeconds(30)
+    setScoreDisplay(0)
+    createBoard()
+    startTiming()
+  }
+
+  const startTiming = () => {
+    timingInterval = setInterval(() => {
       setSeconds(prevState => {
         if (prevState > 0) {
           return prevState - 1
@@ -55,8 +61,8 @@ export const Home = props => {
           clearInterval(timingInterval)
           return 0
         }
-      });
-    }, 1000);
+      })
+    }, 1000)
   }
 
   const checkForColumnOfFour = () => {
@@ -217,14 +223,14 @@ export const Home = props => {
       <div className="game-header">
         <div className="action-wrapper">
           <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
-          <button onClick={() => console.log(111)} style={{width: 150}}>{scoreDisplay}</button>
+          <button style={{width: 150, cursor: 'default'}}>{scoreDisplay}</button>
         </div>
         <div>
-          <img src={stopIcon} alt="stop-icon" className="stop-icon" />
+          <img src={stopIcon} alt="stop-icon" className="stop-icon" onClick={stopGame} />
         </div>
         <div className="action-wrapper">
           <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
-          <button onClick={() => console.log(111)} style={{width: 150}}>History Score</button>
+          <button style={{width: 150, cursor: 'default'}}>{scoreDisplay}</button>
         </div>
       </div>
       <div className="timing">
@@ -263,8 +269,13 @@ export const Home = props => {
                 scoreDisplay > 50 ? <img className="star" src={star} /> :
                   <img className="over" src={gameOver} />
               }
-              <div>Your score: {scoreDisplay}</div>
-              <div>History score: {scoreDisplay}</div>
+              <div>
+                {scoreDisplay > 50 ? 'YOU WIN!' : 'YOU LOSE!'}
+              </div>
+              <div>
+                <div>Your score: {scoreDisplay}</div>
+                <div>History score: {scoreDisplay}</div>
+              </div>
               <div className="action-wrapper">
                 <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
                 <button onClick={() => startOver()}>Star Over</button>

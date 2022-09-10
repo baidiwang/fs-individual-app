@@ -20,7 +20,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(jpe?g|png|gif|svg|mp3)$/i,
+        test: /\.(jpe?g|png|gif|svg|mp3|ttf)$/i,
         loader: 'file-loader',
         options: {
           publicPath: '/images',

@@ -9,7 +9,8 @@ const App = () => {
   useEffect(() => {
     function audioPlay() {
       if (audioRef.current) {
-        audioRef.current.play();
+        audioRef.current.volume = 0.05
+        audioRef.current.play()
       }
     }
 
@@ -23,7 +24,7 @@ const App = () => {
   return (
     <>
       <Routes />
-      <audio controls autoPlay loop style={{display: 'none'}} ref={audioRef}>
+      <audio controls loop style={{display: 'none'}} ref={audioRef}>
           <source src={bgAudio} type="audio/mpeg" />
       </audio>
     </>

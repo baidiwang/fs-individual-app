@@ -223,14 +223,14 @@ export const Home = props => {
       <div className="game-header">
         <div className="action-wrapper">
           <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
-          <button style={{width: 150, cursor: 'default'}}>{scoreDisplay}</button>
+          <button style={{width: 150, cursor: 'default'}}>Score: {scoreDisplay}</button>
         </div>
         <div>
           <img src={stopIcon} alt="stop-icon" className="stop-icon" onClick={stopGame} />
         </div>
         <div className="action-wrapper">
           <img src={pokemonBall} alt="pokemon-ball" className="pokemon-ball" />
-          <button style={{width: 150, cursor: 'default'}}>{scoreDisplay}</button>
+          <button style={{width: 150, cursor: 'default'}}>History Score: {scoreDisplay}</button>
         </div>
       </div>
       <div className="timing">

@@ -1,4 +1,6 @@
-html, body, #app {
+html,
+body,
+#app {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -32,7 +34,7 @@ label {
 .navbar .pokemon-logo {
   width: 230px;
   height: 100px;
-  transform: rotate(-20deg);
+  transform: rotate(-5deg);
 }
 
 .content {
@@ -43,8 +45,8 @@ label {
 }
 
 .pokemon-ball {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   z-index: 1;
 }
 
@@ -67,7 +69,7 @@ label {
   background-color: #df543d;
   border-radius: 15px;
   color: #ffffff;
-  width: 250px;
+  width: 180px;
   padding: 5px 0;
   margin-left: -20px;
   cursor: pointer;
@@ -129,6 +131,7 @@ label {
   border-radius: 20px;
   font-size: 20px;
   cursor: pointer;
+  font-family: Combo;
 }
 
 /*form div {*/
@@ -186,8 +189,8 @@ label {
 }
 
 .bug {
-  background: #92BC2C;
-  box-shadow: 0 0 20px #92BC2C;
+  background: #92bc2c;
+  box-shadow: 0 0 20px #92bc2c;
 }
 
 .dark {
@@ -196,83 +199,83 @@ label {
 }
 
 .dragon {
-  background: #0C69C8;
-  box-shadow: 0 0 20px #0C69C8;
+  background: #0c69c8;
+  box-shadow: 0 0 20px #0c69c8;
 }
 
 .electric {
-  background: #F2D94E;
-  box-shadow: 0 0 20px #F2D94E;
+  background: #f2d94e;
+  box-shadow: 0 0 20px #f2d94e;
 }
 
 .fire {
-  background: #FBA54C;
-  box-shadow: 0 0 20px #FBA54C;
+  background: #fba54c;
+  box-shadow: 0 0 20px #fba54c;
 }
 
 .fairy {
-  background: #EE90E6;
-  box-shadow: 0 0 20px #EE90E6;
+  background: #ee90e6;
+  box-shadow: 0 0 20px #ee90e6;
 }
 
 .fighting {
-  background: #D3425F;
-  box-shadow: 0 0 20px #D3425F;
+  background: #d3425f;
+  box-shadow: 0 0 20px #d3425f;
 }
 
 .flying {
-  background: #A1BBEC;
-  box-shadow: 0 0 20px #A1BBEC;
+  background: #a1bbec;
+  box-shadow: 0 0 20px #a1bbec;
 }
 
 .ghost {
-  background: #5F6DBC;
-  box-shadow: 0 0 20px #5F6DBC;
+  background: #5f6dbc;
+  box-shadow: 0 0 20px #5f6dbc;
 }
 
 .grass {
-  background: #5FBD58;
-  box-shadow: 0 0 20px #5FBD58;
+  background: #5fbd58;
+  box-shadow: 0 0 20px #5fbd58;
 }
 
 .ground {
-  background: #DA7C4D;
-  box-shadow: 0 0 20px #DA7C4D;
+  background: #da7c4d;
+  box-shadow: 0 0 20px #da7c4d;
 }
 
 .ice {
-  background: #75D0C1;
-  box-shadow: 0 0 20px #75D0C1;
+  background: #75d0c1;
+  box-shadow: 0 0 20px #75d0c1;
 }
 
 .normal {
-  background: #A0A29F;
-  box-shadow: 0 0 20px #A0A29F;
+  background: #a0a29f;
+  box-shadow: 0 0 20px #a0a29f;
 }
 
 .poison {
-  background: #B763CF;
-  box-shadow: 0 0 20px #B763CF;
+  background: #b763cf;
+  box-shadow: 0 0 20px #b763cf;
 }
 
 .psychic {
-  background: #FA8581;
-  box-shadow: 0 0 20px #FA8581;
+  background: #fa8581;
+  box-shadow: 0 0 20px #fa8581;
 }
 
 .rock {
-  background: #C9BB8A;
-  box-shadow: 0 0 20px #C9BB8A;
+  background: #c9bb8a;
+  box-shadow: 0 0 20px #c9bb8a;
 }
 
 .steel {
-  background: #5695A3;
-  box-shadow: 0 0 20px #5695A3;
+  background: #5695a3;
+  box-shadow: 0 0 20px #5695a3;
 }
 
 .water {
-  background: #539DDF;
-  box-shadow: 0 0 20px #539DDF;
+  background: #539ddf;
+  box-shadow: 0 0 20px #539ddf;
 }
 
 .item {

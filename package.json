@@ -11,7 +11,7 @@
     "start:dev": "npm run build:dev & npm run start-server",
     "start:dev:logger": "LOGGING=true npm run start:dev",
     "start:dev:seed": "SEED=true npm run start:dev",
-    "start-server": "JWT=shh nodemon server -e html,js,scss --ignore public --ignore client"
+    "start-server": "JWT=shh DATABASE_URL=postgres://vwyjrozguytvgj:6ad21cc11790e28baac6ff487ef32ad2ea291030ef10f760a9cfa6d62abba54f@ec2-44-207-253-50.compute-1.amazonaws.com:5432/dgers0n43gvrm nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "author": "Fullstack Academy of Code",
   "license": "MIT",

@@ -5,7 +5,10 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: combo;
+}
+
+#app * {
+  font-family: "Combo", sans-serif;
 }
 
 #app {
@@ -45,8 +48,8 @@ label {
 }
 
 .pokemon-ball {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   z-index: 1;
 }
 

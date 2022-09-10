@@ -17,22 +17,24 @@ const Navbar = (props) => {
     <div className="navbar">
       <img src={pokemonLogo} alt="pokemon-logo" className="pokemon-logo" />
       {!showSignIn ? (
-        <div>
-          <div className="action-wrapper">
+        <div style={{display: "flex"}}>
+          <div className="action-wrapper" style={{marginRight: 50}}>
             <img
               src={pokemonBall}
               alt="pokemon-ball"
               className="pokemon-ball"
+              style={{width: 100, height: 100}}
             />
-            <button onClick={() => setShowSignIn(true)}>Sign In To Play</button>
+            <button style={{padding: '15px 0', borderRadius: 25}} onClick={() => setShowSignIn(true)}>Sign In To Play</button>
           </div>
           <div className="action-wrapper">
             <img
               src={pokemonBall}
               alt="pokemon-ball"
               className="pokemon-ball"
+              style={{width: 100, height: 100}}
             />
-            <button onClick={() => history.push("/home")}>
+            <button style={{padding: '15px 0', borderRadius: 25}} onClick={() => history.push("/home")}>
               Play As A Guest
             </button>
           </div>

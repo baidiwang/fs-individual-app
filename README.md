@@ -6,7 +6,6 @@ Users can either log in or play as a guest to match Pokemons in rows or columns 
 
 Heroku Link: https://pokemon-crash-game.herokuapp.com/
 
-# FS-App-Template
 
 ## Setup
 

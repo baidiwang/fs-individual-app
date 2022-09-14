@@ -1,3 +1,11 @@
+# Pokemon Crush Game
+
+This is a small pokemon crush game built by using Pokemon API and React mainly. 
+Users can either log in or play as a guest to match Pokemons in rows or columns to gain points.
+
+
+Heroku Link: https://pokemon-crash-game.herokuapp.com/
+
 # FS-App-Template
 
 ## Setup

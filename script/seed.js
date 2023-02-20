@@ -26,7 +26,7 @@ async function seed() {
 
   // Get Pokemon data
   const pokemonRequests = [];
-  for (let i = 1; i < 90; i++) {
+  for (let i = 1; i < 100; i++) {
     const request = axios.get("https://pokeapi.co/api/v2/pokemon-form/" + i);
     pokemonRequests.push(request);
   }
